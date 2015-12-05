@@ -1,4 +1,6 @@
 ##CLean Start
+
+
 rm(list=ls())
 
 library(e1071)
@@ -15,7 +17,7 @@ library(rattle)
 library(RColorBrewer)
 
 
-setwd("~/GitHub/WhatsCooking/Scripts")
+setwd("C:/R Learning/WhatsCooking/Scripts")
 
 ## saveWC.RData file contains both the train and test set. 
 #Data from Json files were preprocessed to make it workable with R Programs.
@@ -54,9 +56,21 @@ accuracy <- vector(mode = "numeric",length = ntrials+1)
           accuracy[trial]<-rpartcm$overall[[1]]
      }
       
+  prp(fit)
+  
+  prp(fit, type=1, extra=4)
+  prp(fit)
+  printcp(fit) # display the results
+  plotcp(fit) # visualize cross-validation results
+  summary(fit) # detailed summary of splits
+  
+  
   
   ma <- as.matrix(accuracy)
   
+  
+  
+ 
   ## Apply Qunatile to find 10% 50% and 90% Quantile of the predicted accuracy.
   ma1 <- apply(ma, 2, quantile, probs = c(0.1, 0.5, 0.9)) 
   mat <- t(ma1)
