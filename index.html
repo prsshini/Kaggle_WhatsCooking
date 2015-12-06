@@ -33,22 +33,37 @@
 <h2>
 <a id="data-analysis-and-modelling" class="anchor" href="#data-analysis-and-modelling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Analysis and Modelling.</h2>
 
-<p>The training set is provided as JSON File which needs to be processed so it can be workable in R. The JSON file was converted in to a dataset using JSONLITE package functions. Several Text processing were done on this dataset to assign each ingredient as a variable in the dataset. Similar processing had to be done on the test set as well so the predicted models can be applied to the test set.On looking at the training dataset, the Italian cuisine has got maximum occurrence. This is just an initial picture of what the train set look like. With this, several models were applied on the data to find the accuracy of predictions.
-<a href="https://github.com/prsshini/Kaggle_WhatsCooking/blob/master/Results/Training%20Set%20Plot.png?raw=true">https://github.com/prsshini/Kaggle_WhatsCooking/blob/master/Results/Training%20Set%20Plot.png?raw=true</a></p>
+<p>The training set is provided as JSON File which needs to be processed so it can be workable in R. The JSON file was converted in to a dataset using JSONLITE package functions. Several Text processing were done on this dataset to assign each ingredient as a variable in the dataset. Similar processing had to be done on the test set as well so the predicted models can be applied to the test set.On looking at the training dataset, the Italian cuisine has got maximum occurrence. This is just an initial picture of what the train set look like. With this, several models were applied on the data to find the accuracy of predictions.</p>
+
+<p><img src="https://raw.githubusercontent.com/prsshini/Kaggle_WhatsCooking/master/Results/Training%20Set%20Plot.png" alt=""></p>
 
 <h2>
 <a id="models-applied-on-whatscooking-data" class="anchor" href="#models-applied-on-whatscooking-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Models applied on Whatscooking Data:</h2>
 
 <h3>
-<a id="rpart-as-always-started-with-basic-decision-tree-which-can-perform-only-upto-60-accuracy-functions-were-used-to-find-the-best-cp-values-but-the-complexity-parameter-was-found-to-be-too-low-on-risk-of-overfitting-the-model-moved-to-next-model" class="anchor" href="#rpart-as-always-started-with-basic-decision-tree-which-can-perform-only-upto-60-accuracy-functions-were-used-to-find-the-best-cp-values-but-the-complexity-parameter-was-found-to-be-too-low-on-risk-of-overfitting-the-model-moved-to-next-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>RPART: As always, started with basic decision tree which can perform only upto ~60% Accuracy. Functions were used to find the best cp values. But The complexity parameter was found to be too low. On risk of overfitting the model, moved to next model...</h3>
+<a id="rpart" class="anchor" href="#rpart" aria-hidden="true"><span class="octicon octicon-link"></span></a>RPART:</h3>
+
+<p>As always, started with basic decision tree which can perform only upto ~60% Accuracy. Functions were used to find the best cp values. But The complexity parameter was found to be too low. On risk of overfitting the model, moved to next model...  </p>
 
 <h3>
-<a id="random-forest-when-applying-the-random" class="anchor" href="#random-forest-when-applying-the-random" aria-hidden="true"><span class="octicon octicon-link"></span></a>Random Forest: When applying the random</h3>
+<a id="random-forest" class="anchor" href="#random-forest" aria-hidden="true"><span class="octicon octicon-link"></span></a>Random Forest:</h3>
+
+<p>When applying the random forest, the performance did not do better than rpart. Accuracy was still less than 60%..Maybe RF is not for this dataset. so why not move to next.</p>
+
+<h3>
+<a id="xgboost" class="anchor" href="#xgboost" aria-hidden="true"><span class="octicon octicon-link"></span></a>XGBoost:</h3>
+
+<p>XGBoost actually did very good on this data. It took me from 60% to 79.4%. I can easily move my position in kaggle from 150's to 50th position in the leaderboard. So I decided to stop here and move to a  new competition to get more experience on a different dataset.</p>
+
+<h2>
+<a id="conclusion" class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion:</h2>
+
+<p>Though I've mentioned few models above, I did still play with different model with different parameters like nnet, multinom, etc... which gave me a good experience on this multiclass prediction. </p>
 
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>You can visit my GitHub repository for this project to get a more insight of scripts and results. <a href="https://github.com/prsshini" class="user-mention">@prsshini</a>  </p>
 
 <h3>
 <a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
