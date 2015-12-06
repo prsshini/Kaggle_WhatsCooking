@@ -1,0 +1,17 @@
+{
+    "contents" : "rm(list=ls())\n\nlibrary(jsonlite)\nlibrary(DiagrammeR)\nlibrary(xgboost)\nlibrary(Matrix)\nlibrary(data.table)\n \ntestdata <- fromJSON(\"../data/test.json\", flatten = TRUE)\nload(file=\"../Data/WCProcessedData.Rdata\")\n\n#- prepare the spare matrix to build the xgb model.\nxgbmat<- xgb.DMatrix(Matrix(data.matrix(dataT[, !colnames(dataT) %in% c(\"cuisine\")])), label=as.numeric(dataT$cuisine)-1)\n\n#- Build the model using spare matrix\nxgb<- xgboost(xgbmat, max.depth = 15, eta = 0.1, nround = 200, objective = \"multi:softmax\", num_class = 20)\n\n#- predict the test set with the trained xgb\nXGBPredict<- predict(xgb, newdata = data.matrix(dataT[, !colnames(test) %in% c(\"cuisine\")]))\n\n#Save the trained model for later use.\nsave(xgb,file=\"../results/xgbmodel.rda\")\n\ndata(dataT, package='xgboost')\nxgb.plot.tree(feature_names=xgb.submit.text,model = xgb)\nxgb.submit.text <- levels(dataT$cuisine)[xgb.submit+1]\n\n# Create submission file\nsubmission <- matrix(nrow=ntest, ncol=2)\nsubmission[,1] <- testdata$id\nsubmission[,2] <- as.character(paste(rfpredict))\n\nwrite.csv(submission,file=\"submission with RF.csv\")\n\n",
+    "created" : 1449420324613.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4173216726",
+    "id" : "7A2BB795",
+    "lastKnownWriteTime" : 1449159580,
+    "path" : "~/GitHub/WhatsCooking/Kaggle_WhatsCooking/Scripts/WhatsCooking_XGBoost.R",
+    "project_path" : "Scripts/WhatsCooking_XGBoost.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

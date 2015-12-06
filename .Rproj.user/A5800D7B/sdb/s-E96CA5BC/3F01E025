@@ -1,0 +1,17 @@
+{
+    "contents" : "\nrm(list=ls())\n\nlibrary(SnowballC)\nlibrary(jsonlite)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(tm) # For NLP; creating bag-of-words\nlibrary(caret)\nlibrary(rpart)\nlibrary(rpart.plot)\nlibrary(randomForest)\nlibrary(rattle)\nlibrary(RColorBrewer)\n\n#setwd(\"C:/R Learning/Titanic/Kaggle Comps/Yummly\")\nsetwd(\"C:/R Learning/WhatsCooking/Scripts/\")\n\nload(file=\"C:/R Learning/WhatsCooking/data/saveWC.RData\")\ntargetvar <- \"cuisine\"\n\n# Form the realtest and train parts now\n\n# Set up Formula\nxpart <- \" . \"\nypart <- paste(targetvar,\" ~ \")\nFormula <- as.formula(paste(ypart,xpart))\n\n# Tree model\nfit <- rpart(Formula, data = dataT, method = \"class\",\n             control=rpart.control(minsplit=2,cp=0.0001))\n\nsave(fit, file='DTmodel.rda') \n\nrm(fit)\n\nload(file=\"DTmodel.rda\")\nprp(fit)\ncols<-colnames(dataT)\ncols<-sub(\"-\",\".\",cols)\ncolnames(dataT)<-cols\n\n\nrf<-randomForest(Formula, data=dataT, mtry=2, importance = TRUE, do.trace = 100)\n\n# class(rf)\n# plot(rf, log=\"y\")\n# varImpPlot(rf)\n# \n# MDSplot(rf, rf$cuisine)\n\nsave(rf, file='RFmodel.rda') \n\n\n \ncols<-colnames(test)\ncols<-sub(\"-\",\".\",cols)\ncolnames(test)<-cols\n\n\nrfpredict<- predict(rf,test,\"class\")\n\n# Create submission file\nsubmission <- matrix(nrow=ntest, ncol=2)\nsubmission[,1] <- testdata$id\nsubmission[,2] <- as.character(paste(rfpredict))\n\nwrite.csv(submission,file=\"submission with RF.csv\")\n\n\n",
+    "created" : 1449427854241.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1692977907",
+    "id" : "3F01E025",
+    "lastKnownWriteTime" : 1449380953,
+    "path" : "C:/R Learning/WhatsCooking/Scripts/WhatsCooking_Random Forest.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

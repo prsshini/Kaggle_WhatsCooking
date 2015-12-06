@@ -1,0 +1,17 @@
+{
+    "contents" : "#This script does data preparation for What's Cooking problem.\n#It has two advantages:\n#1. Unnecessary memory is not needed during the actual model building process.\n#2. Unnecessary computation is avoided when making repeated runs.\n\nrm(list=ls())\nif (! (\"methods\" %in% rownames(installed.packages()))) { install.packages(\"methods\") }\nif (! (\"statmod\" %in% rownames(installed.packages()))) { install.packages(\"statmod\") }\nif (! (\"stats\" %in% rownames(installed.packages()))) { install.packages(\"stats\") }\nif (! (\"graphics\" %in% rownames(installed.packages()))) { install.packages(\"graphics\") }\nif (! (\"RCurl\" %in% rownames(installed.packages()))) { install.packages(\"RCurl\") }\nif (! (\"jsonlite\" %in% rownames(installed.packages()))) { install.packages(\"jsonlite\") }\nif (! (\"tools\" %in% rownames(installed.packages()))) { install.packages(\"tools\") }\nif (! (\"utils\" %in% rownames(installed.packages()))) { install.packages(\"utils\") }\n\nif (! (\"SnowballC\" %in% rownames(installed.packages()))) { install.packages(\"SnowballC\") }\nif (! (\"dplyr\" %in% rownames(installed.packages()))) { install.packages(\"dplyr\") }\nif (! (\"ggplot2\" %in% rownames(installed.packages()))) { install.packages(\"ggplot2\") }\nif (! (\"tm\" %in% rownames(installed.packages()))) { install.packages(\"tm\") }\nif (! (\"caret\" %in% rownames(installed.packages()))) { install.packages(\"caret\") }\nif (! (\"rattle\" %in% rownames(installed.packages()))) { install.packages(\"rattle\") }\nif (! (\"pryr\" %in% rownames(installed.packages()))) { install.packages(\"pryr\") }\n\nlibrary(jsonlite)\nlibrary(SnowballC)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(tm) # For NLP; creating bag-of-words\nlibrary(caret)\nlibrary(rattle)\n\ndata <- fromJSON(\"../data/train.json\", flatten = TRUE)\ntestdata <- fromJSON(\"../data/test.json\", flatten = TRUE)\n\n# Form full data\nt1 <- testdata\nt1[,\"cuisine\"] <- NA # this puts a dummy cuisine column\nfulldata <- as.data.frame(rbind(data,t1))\n\n# Preprocess full data\ningredients <- Corpus(VectorSource(fulldata$ingredients))\ningredients <- tm_map(ingredients, stemDocument)\ningredientsDTM <- DocumentTermMatrix(ingredients)\nsparse <- removeSparseTerms(ingredientsDTM, 0.99)\ningredientsDTM <- as.data.frame(as.matrix(sparse))\ningredientsDTM$cuisine <- as.factor(fulldata$cuisine)\ntargetvar <- \"cuisine\"\ntargetval <- \"Italian\"\n# Form the realtest and train parts now\nntrain<- NROW(data)\nntest <- NROW(testdata)\nnfull <- ntrain + ntest\n# Line below: the parantheses around ntrain+1 is important\ntest <- as.data.frame(ingredientsDTM[(ntrain+1):nfull,] )\n\ndata <- as.data.frame(ingredientsDTM[1:ntrain,])\ndataT<-data\n\n#http://www.fromthebottomoftheheap.net/2012/04/01/saving-and-loading-r-objects/\nsave(dataT, test, file = \"../data/saveWC.RData\")\n",
+    "created" : 1449427951669.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3357417342",
+    "id" : "AF67DFB4",
+    "lastKnownWriteTime" : 1449162830,
+    "path" : "~/GitHub/WhatsCooking/Kaggle_WhatsCooking/Scripts/DataPrepForWhatsCooking.r",
+    "project_path" : "Scripts/DataPrepForWhatsCooking.r",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
