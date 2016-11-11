@@ -3,6 +3,7 @@
 #1. Unnecessary memory is not needed during the actual model building process.
 #2. Unnecessary computation is avoided when making repeated runs.
 
+## Comments
 rm(list=ls())
 if (! ("methods" %in% rownames(installed.packages()))) { install.packages("methods") }
 if (! ("statmod" %in% rownames(installed.packages()))) { install.packages("statmod") }
